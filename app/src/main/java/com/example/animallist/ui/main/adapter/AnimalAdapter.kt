@@ -11,15 +11,22 @@ import com.example.animallist.global.helpers.DebugLog
 class AnimalAdapter(
     private val selectAction: (Int) -> Unit
 
-    ) :   PagingDataAdapter<Animal, AnimalItemHolder>(AnimalComparator) {
+) : PagingDataAdapter<Animal, AnimalItemHolder>(AnimalComparator) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        AnimalItemHolder.create(parent,selectAction)
+        AnimalItemHolder.create(parent, selectAction)
 
 
     override fun onBindViewHolder(itemHolder: AnimalItemHolder, position: Int) {
-        itemHolder.bind(getItem(position)!!)
+        return itemHolder.bind(getItem(position)!!)
+    }
+
+    fun changeColorState(position: Int) {
+        getItem(position)?.let {
+            it.state = !it.state
+        }
+        notifyItemChanged(position)
     }
 
 

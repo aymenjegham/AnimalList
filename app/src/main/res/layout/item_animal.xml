@@ -15,9 +15,6 @@
             name="selectAction"
             type="android.view.View.OnClickListener" />
 
-        <variable
-            name="isGreen"
-            type="Boolean" />
 
     </data>
 
@@ -30,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="@{isGreen == true ? @color/green : @android:color/white}"
+            android:background="@{animal.state == true ? @color/green : @android:color/white}"
             android:onClick="@{selectAction::onClick}"
             android:elevation="7dp">
 

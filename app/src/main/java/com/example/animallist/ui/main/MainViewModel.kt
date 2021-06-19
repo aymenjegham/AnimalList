@@ -8,8 +8,8 @@ import com.example.animallist.data.useCase.animal.getListOfAnimalsUseCase.GetAni
 import com.example.animallist.global.helpers.SingleEventLiveDataEvent
 import com.example.animallist.ui.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
-
-
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class MainViewModel @ViewModelInject constructor(
     app: Application,
@@ -22,29 +22,27 @@ class MainViewModel @ViewModelInject constructor(
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    private val animalFlow =
-        getAnimalsListUseCase()
-            .asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
+    private val _animalFlow = MutableStateFlow(
+        getAnimalList()
+    )
+    private val animalFlow = _animalFlow.asStateFlow()
 
-    val animalsList = Transformations.switchMap(fetch){
-       animalFlow
+    val animalsList = Transformations.switchMap(fetch) {
+        animalFlow.value
     }
 
     init {
         fetch.postValue(true)
     }
+
     fun refresh() {
+        _animalFlow.value = getAnimalList()
         fetch.postValue(true)
         _isLoading.postValue(false)
     }
 
-
-
-    fun selectTile(index: Animal){
-        animalsList.observeForever {
-
-        }
-    }
+    private fun getAnimalList() = getAnimalsListUseCase()
+        .asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
 
 
 }

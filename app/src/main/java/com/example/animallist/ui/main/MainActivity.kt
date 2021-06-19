@@ -49,10 +49,8 @@ class MainActivity : BaseActivity() {
     }
 
     private val selectTile: (Int) -> Unit = {
+        animalAdapter.changeColorState(it)
 
-        animalAdapter.snapshot()[it]?.let {
-
-        }
     }
 
     private fun registerMainObserver() {

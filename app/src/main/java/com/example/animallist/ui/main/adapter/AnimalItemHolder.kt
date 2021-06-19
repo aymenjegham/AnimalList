@@ -9,13 +9,11 @@ import com.example.animallist.databinding.ItemAnimalBinding
 
 class AnimalItemHolder private constructor(
     private val binding: ItemAnimalBinding,
-    private val selectAction : (Int) -> Unit
-    ) : RecyclerView.ViewHolder(binding.root) {
+    private val selectAction: (Int) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.setSelectAction {
-            binding.isGreen = true
-            selectAction(absoluteAdapterPosition) }
+        binding.setSelectAction { selectAction(absoluteAdapterPosition) }
     }
 
     fun bind(item: Animal) {
@@ -26,10 +24,10 @@ class AnimalItemHolder private constructor(
     companion object {
         fun create(
             parent: ViewGroup,
-            selectAction : (Int) -> Unit
-            ) =
+            selectAction: (Int) -> Unit
+        ) =
             LayoutInflater.from(parent.context)
                 .let { ItemAnimalBinding.inflate(it, parent, false) }
-                .let { AnimalItemHolder(it,selectAction) }
+                .let { AnimalItemHolder(it, selectAction) }
     }
 }

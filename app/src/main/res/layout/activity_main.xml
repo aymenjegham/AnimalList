@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.animallist.ui.main.MainViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.example.animallist.ui.main.adapter.AnimalAdapter" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clipToPadding="false"
+        tools:context=".ui.main.MainActivity">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/pullToRefresh"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:refreshing="@{viewModel.isLoading}"
+            app:onRefreshListener="@{() -> viewModel.refresh()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_animals"
+                adapter="@{adapter}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingBottom="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
